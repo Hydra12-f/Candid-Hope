@@ -1,18 +1,19 @@
 import { Heart, Mail, Phone, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer id="contact" className="bg-primary text-primary-foreground pt-20 pb-8">
+    <footer className="bg-primary text-primary-foreground pt-20 pb-8">
       <div className="container">
-        <div className="grid md:grid-cols-3 gap-12 mb-16">
+        <div className="grid md:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
           <div>
-            <a href="#home" className="flex items-center gap-2 mb-4">
+            <Link to="/" className="flex items-center gap-2 mb-4">
               <Heart className="w-7 h-7 text-secondary fill-secondary" />
               <span className="text-2xl font-display font-bold">
                 Candid<span className="text-secondary">Hope</span>
               </span>
-            </a>
+            </Link>
             <p className="text-text-on-dark leading-relaxed mb-6">
               Empowering the young generation and parents/caregivers in Nairobi with holistic life skills for desired change.
             </p>
@@ -36,18 +37,41 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Pages */}
           <div>
             <h3 className="font-display text-lg font-bold mb-6">Pages</h3>
             <ul className="space-y-3">
-              {["Home", "About", "Programs", "Causes", "Contact"].map((link) => (
-                <li key={link}>
-                  <a
-                    href={`#${link.toLowerCase()}`}
-                    className="text-text-on-dark hover:text-secondary transition-colors"
-                  >
-                    {link}
-                  </a>
+              {[
+                { label: "Home", to: "/" },
+                { label: "About", to: "/about" },
+                { label: "Blog", to: "/blog" },
+                { label: "Causes", to: "/causes" },
+                { label: "Contact", to: "/contact" },
+              ].map((link) => (
+                <li key={link.label}>
+                  <Link to={link.to} className="text-text-on-dark hover:text-secondary transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Services */}
+          <div>
+            <h3 className="font-display text-lg font-bold mb-6">Services</h3>
+            <ul className="space-y-3">
+              {[
+                { label: "Events", to: "/events" },
+                { label: "Donation", to: "/donation" },
+                { label: "Volunteers", to: "/volunteers" },
+                { label: "Fundraise", to: "/fundraise" },
+                { label: "Support", to: "/contact" },
+              ].map((link) => (
+                <li key={link.label}>
+                  <Link to={link.to} className="text-text-on-dark hover:text-secondary transition-colors">
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>

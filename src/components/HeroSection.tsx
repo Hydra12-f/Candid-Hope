@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const HeroSection = () => {
@@ -34,13 +35,15 @@ const HeroSection = () => {
           </p>
 
           <div className="flex flex-wrap items-center gap-6">
-            <Button className="bg-secondary text-secondary-foreground hover:bg-orange-glow font-semibold px-8 py-6 text-base rounded-full">
-              DONATE NOW
-            </Button>
-            <a href="#volunteer" className="flex items-center gap-3 text-primary-foreground hover:text-secondary transition-colors group">
+            <Link to="/donation">
+              <Button className="bg-secondary text-secondary-foreground hover:bg-orange-glow font-semibold px-8 py-6 text-base rounded-full">
+                DONATE NOW
+              </Button>
+            </Link>
+            <Link to="/volunteers" className="flex items-center gap-3 text-primary-foreground hover:text-secondary transition-colors group">
               <Heart className="w-5 h-5 text-secondary group-hover:scale-110 transition-transform" />
               <span className="font-semibold tracking-wide">BE A VOLUNTEER</span>
-            </a>
+            </Link>
           </div>
         </motion.div>
       </div>

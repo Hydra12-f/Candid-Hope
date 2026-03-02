@@ -1,4 +1,5 @@
 import { Mail, Phone, Heart } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const TopBar = () => {
   return (
@@ -7,9 +8,9 @@ const TopBar = () => {
         <div className="flex items-center gap-2">
           <Heart className="w-4 h-4 text-secondary" />
           <span className="font-body opacity-90">LET'S HELP OTHERS :</span>
-          <a href="#volunteer" className="font-semibold underline underline-offset-2 hover:text-secondary transition-colors">
+          <Link to="/volunteers" className="font-semibold underline underline-offset-2 hover:text-secondary transition-colors">
             BECOME A VOLUNTEER
-          </a>
+          </Link>
         </div>
         <div className="hidden md:flex items-center gap-6">
           <a href="mailto:candidhope1@gmail.com" className="flex items-center gap-2 hover:text-secondary transition-colors">
