@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const CTABanner = () => {
   return (
@@ -20,12 +21,12 @@ const CTABanner = () => {
           <p className="text-text-on-dark text-lg mb-10 max-w-xl mx-auto">
             Every small contribution can create a meaningful change in a young person's life in Nairobi.
           </p>
-          <a
-            href="#contact"
+          <Link
+            to="/donation"
             className="inline-block bg-secondary text-secondary-foreground font-semibold px-10 py-4 rounded-full hover:bg-orange-glow transition-colors text-lg"
           >
             Donate Today
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>
