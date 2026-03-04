@@ -58,6 +58,9 @@ export default {
         "green-light": "hsl(var(--green-light))",
         "orange-glow": "hsl(var(--orange-glow))",
         "text-on-dark": "hsl(var(--text-on-dark))",
+        "section-warm": "hsl(var(--section-warm))",
+        "section-green-soft": "hsl(var(--section-green-soft))",
+        "section-sage": "hsl(var(--section-sage))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

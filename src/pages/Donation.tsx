@@ -130,7 +130,7 @@ const Donation = () => {
                 </div>
 
                 {/* Trust indicators */}
-                <div className="mt-12 p-6 bg-primary rounded-2xl">
+                <div className="mt-12 p-6 bg-gradient-to-br from-[hsl(var(--cta-gradient-start))] to-[hsl(var(--cta-gradient-end))] rounded-2xl">
                   <h4 className="font-display font-bold text-primary-foreground mb-4">Why Donate to Candid Hope?</h4>
                   <ul className="space-y-2 text-text-on-dark text-sm">
                     <li>✓ 100% of donations go directly to programs</li>
