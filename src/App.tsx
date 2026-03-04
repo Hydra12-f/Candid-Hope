@@ -14,6 +14,7 @@ import Contact from "./pages/Contact";
 import Donation from "./pages/Donation";
 import Volunteers from "./pages/Volunteers";
 import Fundraise from "./pages/Fundraise";
+import CauseDetails from "./pages/CauseDetails";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
           <Route path="/causes" element={<Causes />} />
+          <Route path="/causes/:slug" element={<CauseDetails />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogDetails />} />
           <Route path="/events" element={<Events />} />

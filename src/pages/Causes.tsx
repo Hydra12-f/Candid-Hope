@@ -106,12 +106,20 @@ const Causes = () => {
                       </span>
                       <span className="text-muted-foreground">Goal: ${cause.goal.toLocaleString()}</span>
                     </div>
-                    <Link
-                      to="/donation"
-                      className="inline-block bg-secondary text-secondary-foreground text-sm font-semibold px-6 py-2 rounded-full hover:bg-orange-glow transition-colors"
-                    >
-                      Donate Now
-                    </Link>
+                    <div className="flex gap-3">
+                      <Link
+                        to={`/causes/${cause.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`}
+                        className="inline-block bg-foreground text-background text-sm font-semibold px-5 py-2 rounded-full hover:opacity-80 transition-opacity"
+                      >
+                        Learn More
+                      </Link>
+                      <Link
+                        to="/donation"
+                        className="inline-block bg-secondary text-secondary-foreground text-sm font-semibold px-5 py-2 rounded-full hover:bg-orange-glow transition-colors"
+                      >
+                        Donate Now
+                      </Link>
+                    </div>
                   </div>
                 </motion.div>
               ))}
