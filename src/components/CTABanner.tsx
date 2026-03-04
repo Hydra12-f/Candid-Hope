@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 
 const CTABanner = () => {
   return (
-    <section className="py-24 bg-primary relative overflow-hidden">
+    <section className="py-24 bg-gradient-to-br from-[hsl(var(--cta-gradient-start))] to-[hsl(var(--cta-gradient-end))] relative overflow-hidden">
       {/* Decorative circles */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-secondary/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-secondary/8 rounded-full -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/8 rounded-full translate-y-1/2 -translate-x-1/2" />
 
       <div className="container relative z-10 text-center">
         <motion.div

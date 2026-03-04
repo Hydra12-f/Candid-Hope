@@ -140,7 +140,7 @@ const About = () => {
         </section>
 
         {/* Stats */}
-        <section className="py-20 bg-primary">
+        <section className="py-20 bg-gradient-to-br from-[hsl(var(--cta-gradient-start))] to-[hsl(var(--cta-gradient-end))]">
           <div className="container">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               {[

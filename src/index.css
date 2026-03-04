@@ -48,6 +48,17 @@
     --orange-glow: 25 100% 60%;
     --text-on-dark: 42 30% 90%;
 
+    /* Section variety shades */
+    --section-warm: 30 40% 95%;
+    --section-green-soft: 160 25% 93%;
+    --section-sage: 150 15% 90%;
+    --cta-gradient-start: 162 45% 22%;
+    --cta-gradient-end: 155 40% 30%;
+    --stats-icon-yellow: 45 90% 65%;
+    --stats-icon-blue: 220 70% 65%;
+    --stats-icon-purple: 280 60% 65%;
+    --stats-icon-orange: 25 85% 60%;
+
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;

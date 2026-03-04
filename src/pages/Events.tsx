@@ -5,9 +5,11 @@ import PageHero from "@/components/PageHero";
 import { motion } from "framer-motion";
 import { Calendar, MapPin, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const upcomingEvents = [
   {
+    slug: "youth-leadership-summit-2025",
     image: "https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg?auto=compress&cs=tinysrgb&w=600",
     title: "Youth Leadership Summit 2025",
     date: "March 15, 2025",
@@ -16,6 +18,7 @@ const upcomingEvents = [
     desc: "A full-day summit bringing together young leaders from across Nairobi for workshops, networking, and inspiration.",
   },
   {
+    slug: "parent-caregiver-workshop",
     image: "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=600",
     title: "Parent & Caregiver Workshop",
     date: "April 5, 2025",
@@ -24,6 +27,7 @@ const upcomingEvents = [
     desc: "Interactive workshop on positive parenting, communication skills, and supporting youth mental health at home.",
   },
   {
+    slug: "life-skills-training-bootcamp",
     image: "https://images.pexels.com/photos/8613312/pexels-photo-8613312.jpeg?auto=compress&cs=tinysrgb&w=600",
     title: "Life Skills Training Bootcamp",
     date: "May 10-12, 2025",
@@ -32,6 +36,7 @@ const upcomingEvents = [
     desc: "Three-day intensive bootcamp covering decision-making, financial literacy, and career planning for secondary school students.",
   },
   {
+    slug: "community-fun-day-fundraiser",
     image: "https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=600",
     title: "Community Fun Day & Fundraiser",
     date: "June 21, 2025",
@@ -112,9 +117,11 @@ const Events = () => {
                         <MapPin className="w-4 h-4 text-secondary" /> {event.location}
                       </span>
                     </div>
-                    <Button className="bg-secondary text-secondary-foreground hover:bg-orange-glow font-semibold px-6 rounded-full">
-                      Register Now
-                    </Button>
+                    <Link to={`/events/${event.slug}`}>
+                      <Button className="bg-secondary text-secondary-foreground hover:bg-orange-glow font-semibold px-6 rounded-full">
+                        Register Now
+                      </Button>
+                    </Link>
                   </div>
                 </motion.div>
               ))}

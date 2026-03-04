@@ -3,9 +3,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const posts = [
   {
+    slug: "life-skills-training-changing-youth-outcomes",
     image: "https://images.pexels.com/photos/8613089/pexels-photo-8613089.jpeg?auto=compress&cs=tinysrgb&w=600",
     category: "Programs",
     date: "Jan 15, 2025",
@@ -13,6 +15,7 @@ const posts = [
     excerpt: "Our latest cohort of youth participants share their transformative experiences after completing the life skills training program.",
   },
   {
+    slug: "parent-workshop-building-stronger-families",
     image: "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=600",
     category: "Community",
     date: "Dec 20, 2024",
@@ -20,6 +23,7 @@ const posts = [
     excerpt: "Candid Hope's caregiver workshops bring parents together to learn positive parenting techniques and support strategies.",
   },
   {
+    slug: "year-in-review-reaching-1689-community-members",
     image: "https://images.pexels.com/photos/6646773/pexels-photo-6646773.jpeg?auto=compress&cs=tinysrgb&w=600",
     category: "Impact",
     date: "Nov 8, 2024",
@@ -27,6 +31,7 @@ const posts = [
     excerpt: "A look back at the milestones, programs, and lives touched by Candid Hope throughout the year.",
   },
   {
+    slug: "digital-literacy-preparing-youth",
     image: "https://images.pexels.com/photos/3184398/pexels-photo-3184398.jpeg?auto=compress&cs=tinysrgb&w=600",
     category: "Education",
     date: "Oct 3, 2024",
@@ -34,6 +39,7 @@ const posts = [
     excerpt: "Our new digital literacy program equips young people with computer skills essential for modern employment opportunities.",
   },
   {
+    slug: "breaking-stigma-mental-health-schools",
     image: "https://images.pexels.com/photos/6647037/pexels-photo-6647037.jpeg?auto=compress&cs=tinysrgb&w=600",
     category: "Health",
     date: "Sep 12, 2024",
@@ -41,6 +47,7 @@ const posts = [
     excerpt: "Candid Hope partners with local schools to create safe spaces for mental health discussions among students.",
   },
   {
+    slug: "meet-our-volunteers-stories-of-dedication",
     image: "https://images.pexels.com/photos/6646917/pexels-photo-6646917.jpeg?auto=compress&cs=tinysrgb&w=600",
     category: "Volunteers",
     date: "Aug 5, 2024",
@@ -65,13 +72,10 @@ const Blog = () => {
           <div className="container">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post, i) => (
-                <motion.article
+                <Link
                   key={post.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className="bg-card rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow group cursor-pointer"
+                  to={`/blog/${post.slug}`}
+                  className="bg-card rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow group block"
                 >
                   <div className="relative overflow-hidden aspect-[16/10]">
                     <img
@@ -90,7 +94,7 @@ const Blog = () => {
                     </h3>
                     <p className="text-muted-foreground text-sm leading-relaxed">{post.excerpt}</p>
                   </div>
-                </motion.article>
+                </Link>
               ))}
             </div>
           </div>
