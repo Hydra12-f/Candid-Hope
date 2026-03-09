@@ -7,19 +7,24 @@ import { Heart, Shield, Globe, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { useCauses } from "@/hooks/useCauses";
+import DonationDialog from "@/components/DonationDialog";
 
-const amounts = [10, 25, 50, 100, 250, 500];
+const amounts = [500, 1000, 2500, 5000, 10000, 25000];
 
 const impactItems = [
-  { icon: Heart, amount: "$10", text: "Provides school supplies for one child for a term" },
-  { icon: Users, amount: "$50", text: "Funds one youth through a full mentorship program" },
-  { icon: Globe, amount: "$100", text: "Sponsors a life skills workshop at a local school" },
-  { icon: Shield, amount: "$500", text: "Supports a month of community outreach programs" },
+  { icon: Heart, amount: "KES 500", text: "Provides school supplies for one child for a term" },
+  { icon: Users, amount: "KES 2,500", text: "Funds one youth through a full mentorship program" },
+  { icon: Globe, amount: "KES 5,000", text: "Sponsors a life skills workshop at a local school" },
+  { icon: Shield, amount: "KES 25,000", text: "Supports a month of community outreach programs" },
 ];
 
 const Donation = () => {
-  const [selected, setSelected] = useState<number | null>(50);
-  const [custom, setCustom] = useState("");
+  const { data: causes } = useCauses();
+  const [selectedCause, setSelectedCause] = useState<string>("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const causeObj = (causes || []).find((c) => c.slug === selectedCause);
 
   return (
     <div className="min-h-screen bg-background">
@@ -35,7 +40,7 @@ const Donation = () => {
         <section className="py-24 bg-background">
           <div className="container">
             <div className="grid lg:grid-cols-2 gap-16">
-              {/* Donation Form */}
+              {/* Donation CTA */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -43,52 +48,44 @@ const Donation = () => {
                 transition={{ duration: 0.7 }}
               >
                 <div className="bg-card p-8 md:p-10 rounded-2xl shadow-lg">
-                  <h3 className="font-display text-2xl font-bold text-foreground mb-2">Choose an Amount</h3>
-                  <p className="text-muted-foreground mb-6">Every contribution makes a difference.</p>
+                  <h3 className="font-display text-2xl font-bold text-foreground mb-2">Choose a Cause</h3>
+                  <p className="text-muted-foreground mb-6">Select a cause and donate via M-Pesa.</p>
 
-                  <div className="grid grid-cols-3 gap-3 mb-6">
-                    {amounts.map((amount) => (
-                      <button
-                        key={amount}
-                        onClick={() => { setSelected(amount); setCustom(""); }}
-                        className={`py-3 rounded-xl font-semibold transition-all text-lg ${
-                          selected === amount
-                            ? "bg-secondary text-secondary-foreground shadow-md"
-                            : "bg-muted text-foreground hover:bg-secondary/20"
-                        }`}
-                      >
-                        ${amount}
-                      </button>
-                    ))}
+                  <div className="space-y-3 mb-8">
+                    {(causes || []).map((cause) => {
+                      const progress = cause.goal > 0 ? (cause.raised / cause.goal) * 100 : 0;
+                      return (
+                        <button
+                          key={cause.slug}
+                          onClick={() => setSelectedCause(cause.slug)}
+                          className={`w-full text-left p-4 rounded-xl border transition-all ${
+                            selectedCause === cause.slug
+                              ? "border-secondary bg-secondary/10"
+                              : "border-border hover:border-secondary/50"
+                          }`}
+                        >
+                          <p className="font-semibold text-foreground">{cause.title}</p>
+                          <div className="w-full bg-muted rounded-full h-1.5 mt-2 mb-1">
+                            <div className="bg-secondary h-1.5 rounded-full" style={{ width: `${Math.min(progress, 100)}%` }} />
+                          </div>
+                          <p className="text-xs text-muted-foreground">
+                            KES {cause.raised.toLocaleString()} raised of KES {cause.goal.toLocaleString()}
+                          </p>
+                        </button>
+                      );
+                    })}
                   </div>
 
-                  <div className="mb-8">
-                    <label className="text-sm font-medium text-foreground mb-1.5 block">Custom Amount</label>
-                    <Input
-                      type="number"
-                      placeholder="Enter amount"
-                      value={custom}
-                      onChange={(e) => { setCustom(e.target.value); setSelected(null); }}
-                      className="bg-background"
-                    />
-                  </div>
-
-                  <div className="space-y-4 mb-8">
-                    <h4 className="font-display font-bold text-foreground">Personal Information</h4>
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <Input placeholder="First Name" className="bg-background" />
-                      <Input placeholder="Last Name" className="bg-background" />
-                    </div>
-                    <Input type="email" placeholder="Email Address" className="bg-background" />
-                    <Input type="tel" placeholder="Phone Number" className="bg-background" />
-                  </div>
-
-                  <Button className="w-full bg-secondary text-secondary-foreground hover:bg-orange-glow font-semibold py-4 rounded-full text-lg">
-                    Donate ${selected || custom || "0"} Now
+                  <Button
+                    onClick={() => { if (selectedCause) setDialogOpen(true); }}
+                    disabled={!selectedCause}
+                    className="w-full bg-secondary text-secondary-foreground hover:opacity-90 font-semibold py-4 rounded-full text-lg"
+                  >
+                    Donate via M-Pesa
                   </Button>
 
                   <p className="text-center text-muted-foreground text-xs mt-4 flex items-center justify-center gap-1">
-                    <Shield className="w-3 h-3" /> Your donation is secure and encrypted
+                    <Shield className="w-3 h-3" /> Your donation is secure via M-Pesa
                   </p>
                 </div>
               </motion.div>
@@ -105,7 +102,7 @@ const Donation = () => {
                   See how your donation helps
                 </h2>
                 <p className="text-muted-foreground text-lg mb-10 leading-relaxed">
-                  Every dollar directly supports our programs in Nairobi. Here's how your contribution makes a difference:
+                  Every shilling directly supports our programs in Nairobi. Here's how your contribution makes a difference:
                 </p>
 
                 <div className="space-y-6">
@@ -129,7 +126,6 @@ const Donation = () => {
                   ))}
                 </div>
 
-                {/* Trust indicators */}
                 <div className="mt-12 p-6 bg-gradient-to-br from-[hsl(var(--cta-gradient-start))] to-[hsl(var(--cta-gradient-end))] rounded-2xl">
                   <h4 className="font-display font-bold text-primary-foreground mb-4">Why Donate to Candid Hope?</h4>
                   <ul className="space-y-2 text-text-on-dark text-sm">
@@ -145,6 +141,15 @@ const Donation = () => {
         </section>
       </main>
       <Footer />
+
+      {causeObj && (
+        <DonationDialog
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+          causeSlug={causeObj.slug}
+          causeTitle={causeObj.title}
+        />
+      )}
     </div>
   );
 };
