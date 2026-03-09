@@ -192,7 +192,7 @@ const DonationDialog = ({ open, onOpenChange, causeSlug, causeTitle }: DonationD
 
         {paymentState === "success" && (
           <div className="py-10 text-center space-y-4">
-            <CheckCircle2 className="w-14 h-14 text-green-600 mx-auto" />
+            <CheckCircle2 className="w-14 h-14 text-primary mx-auto" />
             <h3 className="font-display text-lg font-bold text-foreground">Payment Successful!</h3>
             <p className="text-muted-foreground text-sm">
               Thank you for your generous donation of <strong>KES {donationAmount?.toLocaleString()}</strong>.
