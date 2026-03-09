@@ -1,36 +1,30 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { useCauses } from "@/hooks/useCauses";
+import DonationDialog from "@/components/DonationDialog";
 import cause1 from "@/assets/cause-1.jpg";
 import cause2 from "@/assets/cause-2.jpg";
 import cause3 from "@/assets/cause-3.jpg";
 
-const causes = [
-  {
-    image: cause1,
-    category: "Mentorship",
-    title: "Youth Mentorship & Leadership Program",
-    desc: "Guiding young people through structured mentorship for personal growth.",
-    raised: 2500,
-    goal: 8000,
-  },
-  {
-    image: cause2,
-    category: "Community",
-    title: "Parent & Caregiver Support Initiative",
-    desc: "Empowering parents with skills to support youth development at home.",
-    raised: 4200,
-    goal: 10000,
-  },
-  {
-    image: cause3,
-    category: "Education",
-    title: "Life Skills Workshops for Schools",
-    desc: "Delivering life skills training directly to schools across Nairobi.",
-    raised: 1800,
-    goal: 5000,
-  },
-];
+const causeImages: Record<string, string> = {
+  "youth-mentorship-leadership-program": cause1,
+  "parent-caregiver-support-initiative": cause2,
+  "life-skills-workshops-for-schools": cause3,
+};
+
+const causeCategories: Record<string, string> = {
+  "youth-mentorship-leadership-program": "Mentorship",
+  "parent-caregiver-support-initiative": "Community",
+  "life-skills-workshops-for-schools": "Education",
+};
 
 const CausesSection = () => {
+  const { data: causes } = useCauses();
+  const [donationCause, setDonationCause] = useState<{ slug: string; title: string } | null>(null);
+
+  // Show only first 3 causes on homepage
+  const displayCauses = (causes || []).slice(0, 3);
+
   return (
     <section id="causes" className="py-24 bg-background">
       <div className="container">
@@ -42,49 +36,65 @@ const CausesSection = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {causes.map((cause, i) => (
-            <motion.div
-              key={cause.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15, duration: 0.5 }}
-              className="bg-card rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow group"
-            >
-              <div className="relative overflow-hidden aspect-[4/3]">
-                <img
-                  src={cause.image}
-                  alt={cause.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <span className="absolute top-4 left-4 bg-secondary text-secondary-foreground text-xs font-semibold px-3 py-1 rounded-full">
-                  {cause.category}
-                </span>
-              </div>
-              <div className="p-6">
-                <h3 className="font-display text-xl font-bold text-foreground mb-2">{cause.title}</h3>
-                <p className="text-muted-foreground text-sm mb-4">{cause.desc}</p>
-
-                {/* Progress bar */}
-                <div className="w-full bg-muted rounded-full h-2 mb-3">
-                  <div
-                    className="bg-secondary h-2 rounded-full transition-all duration-700"
-                    style={{ width: `${(cause.raised / cause.goal) * 100}%` }}
+          {displayCauses.map((cause, i) => {
+            const progress = cause.goal > 0 ? (cause.raised / cause.goal) * 100 : 0;
+            return (
+              <motion.div
+                key={cause.slug}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15, duration: 0.5 }}
+                className="bg-card rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow group"
+              >
+                <div className="relative overflow-hidden aspect-[4/3]">
+                  <img
+                    src={causeImages[cause.slug] || cause1}
+                    alt={cause.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-foreground font-medium">
-                    Raised: <span className="text-secondary">${cause.raised.toLocaleString()}</span>
-                  </span>
-                  <span className="text-muted-foreground">
-                    Goal: ${cause.goal.toLocaleString()}
+                  <span className="absolute top-4 left-4 bg-secondary text-secondary-foreground text-xs font-semibold px-3 py-1 rounded-full">
+                    {causeCategories[cause.slug] || "Cause"}
                   </span>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+                <div className="p-6">
+                  <h3 className="font-display text-xl font-bold text-foreground mb-2">{cause.title}</h3>
+
+                  <div className="w-full bg-muted rounded-full h-2 mb-3">
+                    <div
+                      className="bg-secondary h-2 rounded-full transition-all duration-700"
+                      style={{ width: `${Math.min(progress, 100)}%` }}
+                    />
+                  </div>
+                  <div className="flex justify-between text-sm mb-4">
+                    <span className="text-foreground font-medium">
+                      Raised: <span className="text-secondary">KES {cause.raised.toLocaleString()}</span>
+                    </span>
+                    <span className="text-muted-foreground">
+                      Goal: KES {cause.goal.toLocaleString()}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setDonationCause({ slug: cause.slug, title: cause.title })}
+                    className="inline-block bg-secondary text-secondary-foreground text-sm font-semibold px-5 py-2 rounded-full hover:opacity-90 transition-opacity"
+                  >
+                    Donate Now
+                  </button>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
+
+      {donationCause && (
+        <DonationDialog
+          open={!!donationCause}
+          onOpenChange={(open) => { if (!open) setDonationCause(null); }}
+          causeSlug={donationCause.slug}
+          causeTitle={donationCause.title}
+        />
+      )}
     </section>
   );
 };
