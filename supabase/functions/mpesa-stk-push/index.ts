@@ -43,7 +43,18 @@ Deno.serve(async (req) => {
       "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
       { headers: { Authorization: `Basic ${authString}` } }
     );
-    const tokenData = await tokenRes.json();
+
+    const tokenText = await tokenRes.text();
+    let tokenData;
+    try {
+      tokenData = JSON.parse(tokenText);
+    } catch {
+      console.error("M-Pesa token response not JSON:", tokenText);
+      return new Response(
+        JSON.stringify({ error: "M-Pesa authentication failed. Safaricom API may be unavailable." }),
+        { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
     const accessToken = tokenData.access_token;
 
     if (!accessToken) {
@@ -86,12 +97,22 @@ Deno.serve(async (req) => {
       }
     );
 
-    const stkData = await stkRes.json();
+    const stkText = await stkRes.text();
+    let stkData;
+    try {
+      stkData = JSON.parse(stkText);
+    } catch {
+      console.error("M-Pesa STK response not JSON:", stkText);
+      return new Response(
+        JSON.stringify({ error: "M-Pesa STK Push failed. Safaricom API may be unavailable." }),
+        { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
     console.log("STK Push response:", stkData);
 
     if (stkData.ResponseCode !== "0") {
       return new Response(
-        JSON.stringify({ error: stkData.ResponseDescription || "STK Push failed" }),
+        JSON.stringify({ error: stkData.ResponseDescription || stkData.errorMessage || "STK Push failed" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
