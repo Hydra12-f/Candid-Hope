@@ -78,16 +78,27 @@ const Donation = () => {
                     })}
                   </div>
 
-                  <Button
-                    onClick={() => { if (selectedCause) setDialogOpen(true); }}
-                    disabled={!selectedCause}
-                    className="w-full bg-secondary text-secondary-foreground hover:opacity-90 font-semibold py-4 rounded-full text-lg"
-                  >
-                    Donate via M-Pesa
-                  </Button>
+                  <div className="space-y-3">
+                    <Button
+                      onClick={() => { if (selectedCause) setDialogOpen(true); }}
+                      disabled={!selectedCause}
+                      className="w-full bg-secondary text-secondary-foreground hover:opacity-90 font-semibold py-4 rounded-full text-lg"
+                    >
+                      Donate via M-Pesa
+                    </Button>
+
+                    <Button
+                      onClick={() => { if (selectedCause) setPaypalDialogOpen(true); }}
+                      disabled={!selectedCause}
+                      variant="outline"
+                      className="w-full font-semibold py-4 rounded-full text-lg border-2 border-[hsl(var(--accent))] text-foreground hover:bg-accent/10"
+                    >
+                      Donate via PayPal
+                    </Button>
+                  </div>
 
                   <p className="text-center text-muted-foreground text-xs mt-4 flex items-center justify-center gap-1">
-                    <Shield className="w-3 h-3" /> Your donation is secure via M-Pesa
+                    <Shield className="w-3 h-3" /> Your donation is secure
                   </p>
                 </div>
               </motion.div>
