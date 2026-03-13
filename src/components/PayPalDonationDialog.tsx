@@ -105,6 +105,18 @@ const PayPalDonationDialog = ({ open, onOpenChange, causeSlug, causeTitle }: Pay
           try {
             const order = await actions.order.capture();
             setTransactionId(order.id);
+
+            // Record donation and send email
+            await supabase.functions.invoke("paypal-record-donation", {
+              body: {
+                donor_name: name || "Anonymous",
+                donor_email: email,
+                amount: donationAmount,
+                cause_slug: causeSlug,
+                paypal_transaction_id: order.id,
+              },
+            });
+
             setPaymentState("success");
           } catch {
             setPaymentState("failed");
