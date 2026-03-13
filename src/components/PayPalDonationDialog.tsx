@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Heart, Loader2, CheckCircle2, XCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const PAYPAL_CLIENT_ID = "AY2_HtR06rr6gAGkG6_Wz48W66eiqBOWsmeGB0Z0VxAkJRCSmHoFDd8IwbJMk35jKxWH88wXEqcnmnn_";
 
