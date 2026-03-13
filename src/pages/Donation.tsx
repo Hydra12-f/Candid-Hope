@@ -51,7 +51,7 @@ const Donation = () => {
               >
                 <div className="bg-card p-8 md:p-10 rounded-2xl shadow-lg">
                   <h3 className="font-display text-2xl font-bold text-foreground mb-2">Choose a Cause</h3>
-                  <p className="text-muted-foreground mb-6">Select a cause and donate via M-Pesa.</p>
+                  <p className="text-muted-foreground mb-6">Select a cause and choose your payment method.</p>
 
                   <div className="space-y-3 mb-8">
                     {(causes || []).map((cause) => {
