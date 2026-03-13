@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useCauses } from "@/hooks/useCauses";
 import DonationDialog from "@/components/DonationDialog";
+import PayPalDonationDialog from "@/components/PayPalDonationDialog";
 
 const amounts = [500, 1000, 2500, 5000, 10000, 25000];
 
