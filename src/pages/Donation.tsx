@@ -156,12 +156,20 @@ const Donation = () => {
       <Footer />
 
       {causeObj && (
-        <DonationDialog
-          open={dialogOpen}
-          onOpenChange={setDialogOpen}
-          causeSlug={causeObj.slug}
-          causeTitle={causeObj.title}
-        />
+        <>
+          <DonationDialog
+            open={dialogOpen}
+            onOpenChange={setDialogOpen}
+            causeSlug={causeObj.slug}
+            causeTitle={causeObj.title}
+          />
+          <PayPalDonationDialog
+            open={paypalDialogOpen}
+            onOpenChange={setPaypalDialogOpen}
+            causeSlug={causeObj.slug}
+            causeTitle={causeObj.title}
+          />
+        </>
       )}
     </div>
   );
