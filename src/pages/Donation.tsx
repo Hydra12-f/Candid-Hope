@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useCauses } from "@/hooks/useCauses";
 import DonationDialog from "@/components/DonationDialog";
+import PayPalDonationDialog from "@/components/PayPalDonationDialog";
 
 const amounts = [500, 1000, 2500, 5000, 10000, 25000];
 
@@ -23,6 +24,7 @@ const Donation = () => {
   const { data: causes } = useCauses();
   const [selectedCause, setSelectedCause] = useState<string>("");
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [paypalDialogOpen, setPaypalDialogOpen] = useState(false);
 
   const causeObj = (causes || []).find((c) => c.slug === selectedCause);
 
@@ -49,7 +51,7 @@ const Donation = () => {
               >
                 <div className="bg-card p-8 md:p-10 rounded-2xl shadow-lg">
                   <h3 className="font-display text-2xl font-bold text-foreground mb-2">Choose a Cause</h3>
-                  <p className="text-muted-foreground mb-6">Select a cause and donate via M-Pesa.</p>
+                  <p className="text-muted-foreground mb-6">Select a cause and choose your payment method.</p>
 
                   <div className="space-y-3 mb-8">
                     {(causes || []).map((cause) => {
@@ -76,16 +78,27 @@ const Donation = () => {
                     })}
                   </div>
 
-                  <Button
-                    onClick={() => { if (selectedCause) setDialogOpen(true); }}
-                    disabled={!selectedCause}
-                    className="w-full bg-secondary text-secondary-foreground hover:opacity-90 font-semibold py-4 rounded-full text-lg"
-                  >
-                    Donate via M-Pesa
-                  </Button>
+                  <div className="space-y-3">
+                    <Button
+                      onClick={() => { if (selectedCause) setDialogOpen(true); }}
+                      disabled={!selectedCause}
+                      className="w-full bg-secondary text-secondary-foreground hover:opacity-90 font-semibold py-4 rounded-full text-lg"
+                    >
+                      Donate via M-Pesa
+                    </Button>
+
+                    <Button
+                      onClick={() => { if (selectedCause) setPaypalDialogOpen(true); }}
+                      disabled={!selectedCause}
+                      variant="outline"
+                      className="w-full font-semibold py-4 rounded-full text-lg border-2 border-[hsl(var(--accent))] text-foreground hover:bg-accent/10"
+                    >
+                      Donate via PayPal
+                    </Button>
+                  </div>
 
                   <p className="text-center text-muted-foreground text-xs mt-4 flex items-center justify-center gap-1">
-                    <Shield className="w-3 h-3" /> Your donation is secure via M-Pesa
+                    <Shield className="w-3 h-3" /> Your donation is secure
                   </p>
                 </div>
               </motion.div>
@@ -143,12 +156,20 @@ const Donation = () => {
       <Footer />
 
       {causeObj && (
-        <DonationDialog
-          open={dialogOpen}
-          onOpenChange={setDialogOpen}
-          causeSlug={causeObj.slug}
-          causeTitle={causeObj.title}
-        />
+        <>
+          <DonationDialog
+            open={dialogOpen}
+            onOpenChange={setDialogOpen}
+            causeSlug={causeObj.slug}
+            causeTitle={causeObj.title}
+          />
+          <PayPalDonationDialog
+            open={paypalDialogOpen}
+            onOpenChange={setPaypalDialogOpen}
+            causeSlug={causeObj.slug}
+            causeTitle={causeObj.title}
+          />
+        </>
       )}
     </div>
   );
