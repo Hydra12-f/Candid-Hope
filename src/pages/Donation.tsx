@@ -24,6 +24,7 @@ const Donation = () => {
   const { data: causes } = useCauses();
   const [selectedCause, setSelectedCause] = useState<string>("");
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [paypalDialogOpen, setPaypalDialogOpen] = useState(false);
 
   const causeObj = (causes || []).find((c) => c.slug === selectedCause);
 
