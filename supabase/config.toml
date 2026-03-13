@@ -8,3 +8,6 @@ verify_jwt = false
 
 [functions.check-donation-status]
 verify_jwt = false
+
+[functions.paypal-record-donation]
+verify_jwt = false
